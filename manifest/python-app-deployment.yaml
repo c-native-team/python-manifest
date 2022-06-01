@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app-deployment
+  namespace: endo-work
+  labels:
+    app: python-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python
+        image: image-registry.openshift-image-registry.svc:5000/endo-work/python-app:main
+        env:
+          - name: APP_FILE
+            value: src/my_func.py
+      serviceAccount: endo
+      serviceAccountName: endo
